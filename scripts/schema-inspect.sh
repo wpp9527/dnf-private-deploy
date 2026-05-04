@@ -14,6 +14,17 @@ if [[ -f "$ENV_FILE" ]]; then
     esac
   done < "$ENV_FILE"
 fi
+
+if [[ "${1:-}" == "--example-json" ]]; then
+  cat <<'JSON'
+{
+  "tables": {
+    "d_taiwan.accounts": ["UID", "accountname", "admin", "parent_uid"]
+  }
+}
+JSON
+  exit 0
+fi
 MYSQL_HOST="${LLNUT_MYSQL_HOST:-127.0.0.1}"
 MYSQL_PORT="${LLNUT_MYSQL_PORT:-3306}"
 MYSQL_USER="${LLNUT_MYSQL_READONLY_USER:-dnf_readonly}"

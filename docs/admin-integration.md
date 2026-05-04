@@ -59,3 +59,11 @@ POST /api/v1/meta/llnut-schema/validate
 ```bash
 DNF_PUBLIC_ADMIN_API_URL=http://127.0.0.1:18882 scripts/validate-schema.sh docs/schema-validation-example.json
 ```
+
+
+如果 `schema-inspect.sh` 输出为行格式，可转换为校验接口需要的 JSON：
+
+```bash
+ENV_FILE=env/.env.local scripts/schema-inspect.sh | scripts/schema-to-json.py > /tmp/llnut-schema.json
+scripts/validate-schema.sh /tmp/llnut-schema.json
+```
