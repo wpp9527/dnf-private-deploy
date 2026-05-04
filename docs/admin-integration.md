@@ -67,3 +67,14 @@ DNF_PUBLIC_ADMIN_API_URL=http://127.0.0.1:18882 scripts/validate-schema.sh docs/
 ENV_FILE=env/.env.local scripts/schema-inspect.sh | scripts/schema-to-json.py > /tmp/llnut-schema.json
 scripts/validate-schema.sh /tmp/llnut-schema.json
 ```
+
+
+## Live-readonly mode
+
+schema 校验和旧后台对比通过后，才允许将新后台设置为：
+
+```env
+LLNUT_MODE=live-readonly
+```
+
+当前仍无写模式；GM、活动、PVF 发放仍需通过后续灰度门禁。
