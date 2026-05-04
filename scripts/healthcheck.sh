@@ -2,6 +2,7 @@
 set -euo pipefail
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 cd "$ROOT_DIR"
-docker compose --env-file env/.env.example -f compose/docker-compose.yaml config >/dev/null
+ENV_FILE="${ENV_FILE:-env/.env.example}"
+docker compose --env-file "$ENV_FILE" -f compose/docker-compose.yaml config >/dev/null
 echo "[ok] compose config valid"
-docker compose --env-file env/.env.example -f compose/docker-compose.yaml ps || true
+docker compose --env-file "$ENV_FILE" -f compose/docker-compose.yaml ps || true
