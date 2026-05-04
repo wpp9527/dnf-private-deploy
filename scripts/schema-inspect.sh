@@ -3,10 +3,16 @@ set -euo pipefail
 ROOT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")/.." && pwd)"
 ENV_FILE="${ENV_FILE:-$ROOT_DIR/env/.env.example}"
 if [[ -f "$ENV_FILE" ]]; then
-  set -a
-  # shellcheck disable=SC1090
-  source "$ENV_FILE"
-  set +a
+  while IFS='=' read -r key value; do
+    [[ -z "$key" || "$key" == \#* ]] && continue
+    case "$key" in
+      LLNUT_MYSQL_HOST|LLNUT_MYSQL_PORT|LLNUT_MYSQL_READONLY_USER|LLNUT_MYSQL_READONLY_PASSWORD)
+        if [[ -z "${!key:-}" ]]; then
+          export "$key=$value"
+        fi
+        ;;
+    esac
+  done < "$ENV_FILE"
 fi
 MYSQL_HOST="${LLNUT_MYSQL_HOST:-127.0.0.1}"
 MYSQL_PORT="${LLNUT_MYSQL_PORT:-3306}"
