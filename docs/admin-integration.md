@@ -35,3 +35,20 @@
 4. PVF 文件由私有部署仓统一挂载到后台导入目录。
 5. 发放、充值、封禁、活动开关等写操作必须先接入 RBAC 与审计日志。
 6. 写操作启用前，与旧后台同一条数据链路做对比验证，禁止双写到新库。
+
+
+## Schema inspection
+
+在新后台切换到 live 只读模式前，使用只读账号执行：
+
+```bash
+ENV_FILE=env/.env.local scripts/schema-inspect.sh
+```
+
+输出的表结构应再提交给 `dnf-public-admin` 的：
+
+```text
+POST /api/v1/meta/llnut-schema/validate
+```
+
+校验通过后，才能把账号/角色/计费读取从 demo 数据切到 live 只读数据。
