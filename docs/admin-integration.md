@@ -52,3 +52,10 @@ POST /api/v1/meta/llnut-schema/validate
 ```
 
 校验通过后，才能把账号/角色/计费读取从 demo 数据切到 live 只读数据。
+
+
+本地已有 schema JSON 后，可直接执行：
+
+```bash
+DNF_PUBLIC_ADMIN_API_URL=http://127.0.0.1:18882 scripts/validate-schema.sh docs/schema-validation-example.json
+```
